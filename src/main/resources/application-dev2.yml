@@ -1,0 +1,73 @@
+spring:
+  mail:
+    host: smtp.163.com
+    port: 465
+    username: m17864154913@163.com
+    password: forxkasake78647
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+      imap:
+        ssl:
+          socketFactory:
+            fallback: false
+  data:
+    mongodb:
+      uri: mongodb://admin:admin@211.87.227.234:27017/zhiku?authSource=admin&readPreference=primary&appname=MongoDB%20Compass%20Beta&ssl=false
+#      uri: mongodb://127.0.0.1:27017/zhiku
+  datasource:
+#    todo: 临时替换数据库，避免影响上线数据库
+#    url: jdbc:mysql://cdb-nj2smsfc.bj.tencentcdb.com:10001/zhiku?characterEncoding=utf-8&serverTimezone=GMT%2b8
+#    username: zhiku
+#    password: zhiku_123b
+    url: jdbc:mysql://211.87.227.234:3306/zhiku?characterEncoding=utf-8&serverTimezone=GMT%2b8
+#    url: jdbc:mysql://127.0.0.1:3306/zhiku?characterEncoding=utf-8&serverTimezone=GMT%2b8
+    username: root
+    password: Zhiku_123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 1
+      maximum-pool-size: 8
+
+  freemarker:
+    template-loader-path: classpath:/freemarker/
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      location: /var/zhiku/temp
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss #无效
+    time-zone: GMT+8 #无效
+
+mybatis:
+  type-aliases-package: com.zhiku.elearning.entity
+  mapper-locations: com/zhiku/elearning/mapper/*.xml
+server:
+  port: 8899  #TODO:邮件账号激活地址用的是静态地址，端口要去手动改写，路径：resources->freemarker->email.ftl
+
+
+
+#自定义值#
+basePath_upload: "unknow"
+basePath_preview: "unknow"
+max_size: 100000000
+type_reg: "pptx?|docx?|pdf"
+#智库工程储存根路径
+root_path: /var/zhiku
+#root_path: E:/ZhikuFiles
+#记录文件位置
+file_path:
+  #访问量记录文件
+  visit_statistics: ${root_path}/logs/visit_statistics.log
+  #md课程内容文件储存目录
+  md_save: ${root_path}/mdFiles
+  #上传文件存储目录
+  upload_path: ${root_path}/upload
+#图床
+picture:
+  #图片储存根位置，改变记得要将历史文件移动到新路径下，不然课程无法显示图片
+  save_path: ${root_path}/pictures/
