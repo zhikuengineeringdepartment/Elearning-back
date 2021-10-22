@@ -1,12 +1,25 @@
 package com.zhiku.elearning.entity.mysql;
 
+
 public class Knowledge {
+    /**
+     * 自增点 id
+     */
     private Integer kid;
 
+    /**
+     * 知识点序号,对应三级标题的序号，CCC+SS+KK生成，作为排序的依据
+     */
     private Integer knowledgeSeq;
 
+    /**
+     * 知识点名称，如： ### 1.1.1.本章概述
+     */
     private String knowledgeName;
 
+    /**
+     * 所属小节,对应节id
+     */
     private Integer knowledgeSection;
 
     public Integer getKid() {

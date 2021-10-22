@@ -7,13 +7,13 @@ import com.zhiku.elearning.entity.mysql.NoteMysql;
  * 笔记视图
  */
 public class NoteView extends NoteMysql {
-    private ColParagraphView colParagraphView;
+    private CollectParagraphView colParagraphView;
 
-    public void setColParagraphView(ColParagraphView colParagraphView) {
+    public void setColParagraphView(CollectParagraphView colParagraphView) {
         this.colParagraphView = colParagraphView;
     }
 
-    public ColParagraphView getColParagraphView() {
+    public CollectParagraphView getColParagraphView() {
         return colParagraphView;
     }
 }

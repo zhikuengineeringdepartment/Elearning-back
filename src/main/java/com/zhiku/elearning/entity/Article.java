@@ -1,5 +1,10 @@
 package com.zhiku.elearning.entity;
 
+/**
+ * 数据库中已无对应的 article 表
+ */
+
+@Deprecated
 public class Article {
     private int id;
     private String name;

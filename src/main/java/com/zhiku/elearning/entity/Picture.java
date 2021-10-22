@@ -1,24 +1,53 @@
 package com.zhiku.elearning.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
+
+/**
+ *
+ * 图片存储（目前存放在系统文件系统） /pictures/xxx...
+ *
+ */
+
 public class Picture {
     private Integer picId;
-
+    /**
+     * 用户id
+     */
     private Integer uid;
 
+    /**
+     * 原文件名
+     */
     private String orgName;
 
+    /**
+     * 课程id
+     */
     private Integer cid;
 
+
+    /**
+     * 章节索引字符串数组
+     */
     private String sections;
 
+    /**
+     * url
+     */
     private String url;
 
+    /**
+     * todo 目前都为空,备份url,上传到其他图床中
+     */
     private String bupUrl;
 
+    /**
+     * 创建时间
+     */
     private Date createTime;
 
     public Integer getPicId() {
@@ -77,7 +106,7 @@ public class Picture {
         this.bupUrl = bupUrl == null ? null : bupUrl.trim();
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")//无效
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")//无效
     public Date getCreateTime() {
         return createTime;
     }

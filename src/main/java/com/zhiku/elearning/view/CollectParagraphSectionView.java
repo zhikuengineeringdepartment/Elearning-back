@@ -1,9 +1,9 @@
 package com.zhiku.elearning.view;
 
 
-import com.zhiku.elearning.entity.mysql.ColParagraphMysql;
+import com.zhiku.elearning.entity.mysql.CollectParagraphMysql;
 
-public class ColParagraphSectionView extends ColParagraphMysql {
+public class CollectParagraphSectionView extends CollectParagraphMysql {
     private Integer paragraphSeq;
 
     public Integer getParagraphSeq(){

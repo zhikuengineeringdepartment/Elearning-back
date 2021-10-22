@@ -8,9 +8,19 @@ import java.util.List;
 public class Child {
     private Integer sid;
     private Integer section_seq;
+    /**
+     * 分段名：如 '2.1 基本概念'
+     */
     private String section_name;
+    /**
+     * 层级结构
+     */
     private Integer level;
-    private List<Document> contents;
+    private List<Document> contents; // todo 这个是什么意思？
+
+    /**
+     * 递归式的树形结构，如1级标题包含多个2级标题，2级标题包含多个3级标题
+     */
     private List<Child> sub;
 
     public List<Document> getContents() {

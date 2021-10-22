@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Deprecated
 @Component
 public interface ParagraphMapper {
     int deleteByPrimaryKey(Integer pid);

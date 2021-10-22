@@ -1,9 +1,22 @@
 package com.zhiku.elearning.view;
 
 public class SubView {
+    /**
+     * 章节节号
+     */
     private Integer sid;
+
+    /**
+     * 章节名
+     * 如：## 2.1 基本概念
+     */
     private String sectionName;
+
     private Integer sectionSeq;
+
+    /**
+     * 对应的课程的 cid
+     */
     private Integer sectionCourse;
 
     public Integer getSid() {

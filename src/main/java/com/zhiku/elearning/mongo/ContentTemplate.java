@@ -21,15 +21,14 @@ public class ContentTemplate {
 
     private List<Paragraph> getAll() {
         Query query = new Query();
-        List<Paragraph> courses = mongoTemplate.find(query, Paragraph.class);
-//        ListIterator<Paragraph> iter = courses.listIterator();
+        //        ListIterator<Paragraph> iter = courses.listIterator();
 //        while(iter.hasNext()){
 //            Paragraph c = iter.next();
 //            System.out.println(c.getParagraphContent());
 //            System.out.println(c.getParagraphKnowledge());
 //            System.out.println(c.getClass());
 //        }
-        return courses;
+        return mongoTemplate.find(query, Paragraph.class);
     }
 
     /**
@@ -41,7 +40,6 @@ public class ContentTemplate {
         Query query = new Query();
         query.addCriteria(Criteria.where("paragraph_knowledge").in(kids));
         query.with(Sort.by("paragraph_knowledge", "paragraph_seq"));
-        List<Paragraph> paragraphs = mongoTemplate.find(query, Paragraph.class);
 
 
 //        //排序
@@ -66,8 +64,7 @@ public class ContentTemplate {
 //            paragraphsA[i]=paragraph;
 //            kid2i.put(paragraph.getParagraphKnowledge(),i+1);
 //        }
-
-        return paragraphs;
+        return mongoTemplate.find(query, Paragraph.class);
     }
 
     public void updateByPrimaryKey(Paragraph paragraph) {

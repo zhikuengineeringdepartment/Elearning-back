@@ -27,8 +27,8 @@ public class CollectTemplate {
         //        ListIterator<ColParagraphMysql> iter = courses.listIterator();
 //        while(iter.hasNext()){
 //            ColParagraphMysql c = iter.next();
-//            System.out.println(c.getColpPara());
-//            System.out.println(c.getColpUser());
+//            System.out.println(c.getParagraphId());
+//            System.out.println(c.getCollectUser());
 //            System.out.println(c.getClass());
 //        }
         return mongoTemplate.find(query, ColParagraph.class);

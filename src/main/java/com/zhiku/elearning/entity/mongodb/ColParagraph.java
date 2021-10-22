@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Date;
 
+// todo 作用未知
 @Document(collection = "collect")
 public class ColParagraph {
     @Id

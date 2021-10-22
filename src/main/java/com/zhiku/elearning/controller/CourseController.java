@@ -6,7 +6,6 @@ package com.zhiku.elearning.controller;
 import com.zhiku.elearning.entity.Course;
 import com.zhiku.elearning.service.CourseService;
 import com.zhiku.elearning.service.IndexService;
-import com.zhiku.elearning.service.SectionService;
 import com.zhiku.elearning.util.ResponseData;
 import com.zhiku.elearning.view.CourseView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +22,12 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
     @Autowired
-    private SectionService sectionService;
-    @Autowired
     private IndexService indexService;
 
     //TODO 获得全部课程，在讨论完学院专业课程关系及表的设计之后可以考虑修改获得课程的逻辑，采用学院-专业-课程这样多级选择器
 
     /**
-     * 获得所有的课
+     * 获得所有的课程（缩略图）
      * 后期修改为可按照专业搜课
      *
      * @return 课程列表
@@ -61,8 +58,7 @@ public class CourseController {
 
     /**
      * 获得课程全部版本号
-     *
-     * @return
+     * // fixme 此接口尚未使用
      */
     @ResponseBody
     @RequestMapping(value = "getVids")

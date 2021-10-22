@@ -5,6 +5,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * mongodb 数据为空，业务尚未开展 ？
+ */
+
 @Document(value = "post")
 public class Post {
 

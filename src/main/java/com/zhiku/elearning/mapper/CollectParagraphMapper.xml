@@ -1,76 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zhiku.elearning.mapper.ColParagraphMapper">
-  <resultMap id="BaseResultMap" type="com.zhiku.elearning.entity.mysql.ColParagraphMysql">
-    <id column="colp_para" jdbcType="INTEGER" property="colpPara" />
-    <id column="colp_user" jdbcType="INTEGER" property="colpUser" />
-    <result column="colp_date" jdbcType="TIMESTAMP" property="colpDate" />
+<mapper namespace="com.zhiku.elearning.mapper.CollectParagraphMapper">
+  <resultMap id="BaseResultMap" type="com.zhiku.elearning.entity.mysql.CollectParagraphMysql">
+    <id column="colp_para" jdbcType="INTEGER" property="paragraphId" />
+    <id column="colp_user" jdbcType="INTEGER" property="userId" />
+    <result column="colp_date" jdbcType="TIMESTAMP" property="date" />
   </resultMap>
   <sql id="Base_Column_List">
     colp_para, colp_user, colp_date
   </sql>
-  <select id="selectByPrimaryKey" parameterType="com.zhiku.elearning.entity.mysql.ColParagraphKey" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="com.zhiku.elearning.entity.mysql.CollectParagraphKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from col_paragraph
-    where colp_para = #{colpPara,jdbcType=INTEGER}
-      and colp_user = #{colpUser,jdbcType=INTEGER}
+    where colp_para = #{paragraphId,jdbcType=INTEGER}
+      and colp_user = #{userId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.zhiku.elearning.entity.mysql.ColParagraphKey">
+  <delete id="deleteByPrimaryKey" parameterType="com.zhiku.elearning.entity.mysql.CollectParagraphKey">
     delete from col_paragraph
-    where colp_para = #{colpPara,jdbcType=INTEGER}
-      and colp_user = #{colpUser,jdbcType=INTEGER}
+    where colp_para = #{paragraphId,jdbcType=INTEGER}
+      and colp_user = #{userId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zhiku.elearning.entity.mysql.ColParagraphMysql">
+  <insert id="insert" parameterType="com.zhiku.elearning.entity.mysql.CollectParagraphMysql">
     insert into col_paragraph (colp_para, colp_user, colp_date
       )
-    values (#{colpPara,jdbcType=INTEGER}, #{colpUser,jdbcType=INTEGER}, #{colpDate,jdbcType=TIMESTAMP}
+    values (#{paragraphId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.zhiku.elearning.entity.mysql.ColParagraphMysql">
+  <insert id="insertSelective" parameterType="com.zhiku.elearning.entity.mysql.CollectParagraphMysql">
     insert into col_paragraph
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="colpPara != null">
+      <if test="paragraphId != null">
         colp_para,
       </if>
-      <if test="colpUser != null">
+      <if test="userId != null">
         colp_user,
       </if>
-      <if test="colpDate != null">
+      <if test="date != null">
         colp_date,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="colpPara != null">
-        #{colpPara,jdbcType=INTEGER},
+      <if test="paragraphId != null">
+        #{paragraphId,jdbcType=INTEGER},
       </if>
-      <if test="colpUser != null">
-        #{colpUser,jdbcType=INTEGER},
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
       </if>
-      <if test="colpDate != null">
-        #{colpDate,jdbcType=TIMESTAMP},
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zhiku.elearning.entity.mysql.ColParagraphMysql">
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhiku.elearning.entity.mysql.CollectParagraphMysql">
     update col_paragraph
     <set>
-      <if test="colpDate != null">
-        colp_date = #{colpDate,jdbcType=TIMESTAMP},
+      <if test="date != null">
+        colp_date = #{date,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where colp_para = #{colpPara,jdbcType=INTEGER}
-      and colp_user = #{colpUser,jdbcType=INTEGER}
+    where colp_para = #{paragraphId,jdbcType=INTEGER}
+      and colp_user = #{userId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zhiku.elearning.entity.mysql.ColParagraphMysql">
+  <update id="updateByPrimaryKey" parameterType="com.zhiku.elearning.entity.mysql.CollectParagraphMysql">
     update col_paragraph
-    set colp_date = #{colpDate,jdbcType=TIMESTAMP}
-    where colp_para = #{colpPara,jdbcType=INTEGER}
-      and colp_user = #{colpUser,jdbcType=INTEGER}
+    set colp_date = #{date,jdbcType=TIMESTAMP}
+    where colp_para = #{paragraphId,jdbcType=INTEGER}
+      and colp_user = #{userId,jdbcType=INTEGER}
   </update>
 
   <!--自定义SQL-->
-  <resultMap id="ColParagraphView" type="com.zhiku.elearning.view.ColParagraphView" extends="BaseResultMap">
+  <resultMap id="ColParagraphView" type="com.zhiku.elearning.view.CollectParagraphView" extends="BaseResultMap">
     <result column="paragraphSeq" jdbcType="INTEGER" property="paragraphSeq" />
     <result column="paragraph_knowledge" jdbcType="INTEGER" property="paragraphKnowledge" />
     <result column="paragraph_type" jdbcType="CHAR" property="paragraphType" />
@@ -81,7 +81,7 @@
     <result column="course_desc" jdbcType="VARCHAR" property="courseDesc" />
     <result column="course_icon" jdbcType="VARCHAR" property="courseIcon" />
   </resultMap>
-  <resultMap id="ColParagraphSectionView" type="com.zhiku.elearning.view.ColParagraphSectionView" extends="BaseResultMap">
+  <resultMap id="ColParagraphSectionView" type="com.zhiku.elearning.view.CollectParagraphSectionView" extends="BaseResultMap">
     <result column="paragraphSeq" jdbcType="INTEGER" property="paragraphSeq" />
   </resultMap>
   <!--接收uid和sid作为参数-->

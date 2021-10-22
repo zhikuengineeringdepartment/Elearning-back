@@ -11,12 +11,28 @@ import java.util.Date;
 public class Note{
     @Id
     private ObjectId _id;
+
+    /**
+     * 日期类型
+     */
     @Field("note_date")
     private Date noteDate;
+
+    /**
+     * 笔记内容
+     */
     @Field("note_content")
     private String noteContent;
+
+    /**
+     * 用户id , 参照 user 的 uid
+     */
     @Field("note_user")
     private Integer noteUser;
+
+    /**
+     * 参看 content 的主键，段落的主键，表明用户对哪个段落作笔记
+     */
     @Field("note_para")
     private ObjectId notePara;
 

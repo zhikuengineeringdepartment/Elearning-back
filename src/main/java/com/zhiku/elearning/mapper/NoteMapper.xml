@@ -95,7 +95,7 @@
 
   <!--自定义SQL-->
   <resultMap id="NoteView" type="com.zhiku.elearning.view.NoteView" extends="ResultMapWithBLOBs">
-    <association property="colParagraphView" resultMap="com.zhiku.elearning.mapper.ColParagraphMapper.ColParagraphView"></association>
+    <association property="colParagraphView" resultMap="com.zhiku.elearning.mapper.CollectParagraphMapper.ColParagraphView"></association>
   </resultMap>
   <select id="selectBySid" resultMap="NoteView">
     select *

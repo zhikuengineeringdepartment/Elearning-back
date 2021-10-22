@@ -29,8 +29,7 @@ public class CourseTemplate {
      */
     public List<Course> getAllCourse() {
         Query query = new Query();
-        List<Course> courses = mongoTemplate.find(query, Course.class);
-        return courses;
+        return mongoTemplate.find(query, Course.class);
     }
 
     /**

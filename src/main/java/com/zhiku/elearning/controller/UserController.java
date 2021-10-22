@@ -7,8 +7,10 @@ import com.zhiku.elearning.entity.mysql.File;
 import com.zhiku.elearning.entity.mysql.Preference;
 import com.zhiku.elearning.exception.UserCodeNotFoundException;
 import com.zhiku.elearning.exception.UserNotFoundException;
+import com.zhiku.elearning.service.PictureService;
+import com.zhiku.elearning.service.UserCodeService;
 import com.zhiku.elearning.util.*;
-import com.zhiku.elearning.view.ColCourseView;
+import com.zhiku.elearning.view.CollectCourseView;
 import com.zhiku.elearning.view.FileView;
 import com.zhiku.elearning.view.UserBaseInfoView;
 import freemarker.template.Configuration;
@@ -44,9 +46,9 @@ public class UserController {
     @Autowired
     Configuration freemarkerConfig;
     @Autowired
-    com.zhiku.elearning.service.UserCodeService userCodeService;
+    UserCodeService userCodeService;
     @Autowired
-    com.zhiku.elearning.service.PictureService pictureService;
+    PictureService pictureService;
 
     /**
      * 新用户注册
@@ -61,8 +63,8 @@ public class UserController {
      * ----正常注册
      */
     @ResponseBody
-    @RequestMapping(value = "registe", method = RequestMethod.POST)
-    public ResponseData registe(
+    @RequestMapping(value = "register", method = RequestMethod.POST)
+    public ResponseData register(
             HttpServletRequest request,
             @RequestParam(name = "username") String username,
             @RequestParam(name = "password") String password,
@@ -318,28 +320,30 @@ public class UserController {
     }
 
     /**
+     *  fixme 此接口未被前端使用过，且已废弃
+     *
      * 查看用户的收藏课程以及对应的进度
      *
      * @param user 用户
-     * @return
      */
+    @Deprecated
     @ResponseBody
     @RequestMapping(value = "getColCourses", method = RequestMethod.GET)
     public ResponseData getColCourses(User user) {
         ResponseData responseData = null;
-        List<ColCourseView> colCourseViews = courseService.getColCourses(user.getUid());
+        List<CollectCourseView> colCourseViews = courseService.getColCourses(user.getUid());
         responseData = ResponseData.ok();
         responseData.putDataValue("colCourseView", colCourseViews);
         return responseData;
     }
 
     /**
+     * fixme 此接口未被前端使用过，且已废弃
+     *
      * 用户收藏课程
      *
-     * @param user
-     * @param cid
-     * @return
      */
+    @Deprecated
     @ResponseBody
     @RequestMapping(value = "colCourse", method = RequestMethod.POST)
     public ResponseData colCourse(User user, int cid) {
@@ -354,11 +358,12 @@ public class UserController {
     }
 
     /**
+     *
+     *  fixme 此接口未被前端使用过，且已废弃
+     *
      * 用户清除自己的收藏课程
      * 同时会清除对应课程的学习进度
      *
-     * @param user
-     * @param cid
      */
     @ResponseBody
     @RequestMapping(value = "removeColCourse", method = RequestMethod.DELETE)

@@ -2,13 +2,14 @@ package com.zhiku.elearning.view;
 
 
 import com.zhiku.elearning.entity.Course;
-import com.zhiku.elearning.entity.mysql.ColCourse;
+import com.zhiku.elearning.entity.mysql.CollectCourse;
 
 /**
  * 收藏课程视图
  * 用于展示用户收藏的课程及相关进度
  */
-public class ColCourseView extends ColCourse {
+public class CollectCourseView extends CollectCourse {
+
     private Course course;
     //已经完成的小节数
     private int completedSection;

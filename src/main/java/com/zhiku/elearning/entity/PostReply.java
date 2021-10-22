@@ -6,6 +6,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
+/**
+ * mongodb 数据为空
+ */
+
 @Document(value = "postReply")
 public class PostReply {
 

@@ -5,8 +5,8 @@ import com.zhiku.elearning.entity.mongodb.Note;
 import com.zhiku.elearning.service.ParagraphService;
 
 import com.zhiku.elearning.util.ResponseData;
-import com.zhiku.elearning.view.ColParagraphSectionView;
-import com.zhiku.elearning.view.ColParagraphView;
+import com.zhiku.elearning.view.CollectParagraphSectionView;
+import com.zhiku.elearning.view.CollectParagraphView;
 import com.zhiku.elearning.view.NoteView;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class ParagraphController {
     @RequestMapping(value = "getColParagraphBySid" ,method = RequestMethod.POST)
     public ResponseData getColParagraphBySid(User user, int sid){
         ResponseData responseData = null;
-        List<ColParagraphSectionView> colParagraphList = paragraphService.getColParagraphs(user.getUid(),sid);
+        List<CollectParagraphSectionView> colParagraphList = paragraphService.getColParagraphs(user.getUid(),sid);
         responseData = ResponseData.ok();
         responseData.putDataValue("colParagraphList",colParagraphList);
         return responseData;
@@ -93,7 +93,7 @@ public class ParagraphController {
     @RequestMapping(value = "getColParagraphViews",method = RequestMethod.GET)
     public ResponseData getColParagraphViews(User user, Integer cid, Integer page){
         ResponseData responseData = null;
-        List<ColParagraphView> colParagraphViews = paragraphService.getColParagraphViews(user.getUid(),cid,1,page,null);
+        List<CollectParagraphView> colParagraphViews = paragraphService.getColParagraphViews(user.getUid(),cid,1,page,null);
         responseData = ResponseData.ok();
         responseData.putDataValue("colParagraphViews",colParagraphViews);
 

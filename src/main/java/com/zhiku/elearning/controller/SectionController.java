@@ -22,32 +22,31 @@ public class SectionController {
     @Autowired
     IndexService indexService;
 
+
     /**
+     *
      * 获得指定小节的内容
      *
      * @param sid 节号
-     * @return 节-知识点-段落视图
+     * @param cid 课程号 (未使用)
+     * @param vid 版本号 (未使用)
+     *
      */
-//    @ResponseBody
-//    @RequestMapping(value = "getSections",method = RequestMethod.GET)
-//    public ResponseData getSections(@RequestParam(value = "sid") int sid){
-//        ResponseData responseData = ResponseData.ok();
-//        SectionView sectionView = sectionService.getSectionView(sid);
-//        responseData.putDataValue("sectionView",sectionView);
-//        return  responseData;
-//    }
     @ResponseBody
     @RequestMapping(value = "getSection", method = RequestMethod.GET)
     public ResponseData getSection(@RequestParam(value = "sid") int sid,
                                    @RequestParam(required = false) Integer cid, @RequestParam(required = false) String vid) {
         ResponseData responseData = ResponseData.ok();
-        SectionContentView sectionContentView = indexService.getSecondLevelIndex2(sid, cid, vid);
+        SectionContentView sectionContentView = indexService.getSecondLevelIndex(sid, cid, vid);
         responseData.putDataValue("sectionView", sectionContentView);
         return responseData;
     }
 
-    //TODO 存在推荐为空的情况，推荐内容重复，正常使用爬虫和网络使用爬虫差距巨大
 
+
+    // FIXME : getCSDN 这个接口前端目前并未使用  -- from jsy
+
+    //TODO 存在推荐为空的情况，推荐内容重复，正常使用爬虫和网络使用爬虫差距巨大
     /**
      * 获得csdn推荐的爬虫
      *
@@ -87,6 +86,9 @@ public class SectionController {
         return responseData;
     }
 
+
+    // FIXME getCSDN2 这个接口不能正常返回  -- from jsy
+
     /**
      * 获得csdn推荐的爬虫
      *
@@ -100,6 +102,8 @@ public class SectionController {
     public ResponseData getCSDN2(@RequestParam(value = "cid") Integer cid,
                                  @RequestParam(value = "vid") String vid,
                                  @RequestParam(value = "sid") Integer sid) {
+        System.out.println("getCSDN2 " + cid + " " + vid + " " + sid);
+
         ResponseData responseData = ResponseData.ok();
         Child childSection = sectionService.getLevel2Section(cid, vid, sid);
         if (childSection == null) {
@@ -133,6 +137,7 @@ public class SectionController {
         if (re.get(0).getTitle().equals(re.get(1).getTitle()))
             re.remove(0);
         responseData.putDataValue("csdn", re);
+
         return responseData;
     }
 }

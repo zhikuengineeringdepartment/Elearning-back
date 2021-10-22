@@ -24,9 +24,8 @@ public class SpiderUtil {
         // 先弄一个URL对象
         URL url = new URL(u);
         // 打开链接，强转成HttpURLConnection
-        HttpsURLConnection httpsURLConnection = (HttpsURLConnection)url.openConnection();
         //通过对conn对象进行设置连接的参数
-        return httpsURLConnection;
+        return (HttpsURLConnection)url.openConnection();
     }
 
     /**

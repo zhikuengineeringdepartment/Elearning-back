@@ -6,6 +6,13 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
+
+/**
+ * mysql 中的 course 表已经被废弃，响应的 CourseMapper、XML等也都不再使用
+ */
+
+@Deprecated
 @Component
 public interface CourseMapper {
     int deleteByPrimaryKey(Integer cid);
