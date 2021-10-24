@@ -39,31 +39,8 @@ public class ContentTemplate {
     public List<Paragraph> findByKids(List<Integer> kids) {
         Query query = new Query();
         query.addCriteria(Criteria.where("paragraph_knowledge").in(kids));
+        // 先按知识点id排序，再按同一知识点下的seq序号排序
         query.with(Sort.by("paragraph_knowledge", "paragraph_seq"));
-
-
-//        //排序
-//        Paragraph[] paragraphsA=new Paragraph[paragraphs.size()];
-//        Map<Integer,Integer> kid2L=new HashMap<>( kids.size()*3/2 );//每个知识点段落数
-//        for(Paragraph paragraph:paragraphs){
-//            Integer n=kid2L.get(paragraph.getParagraphKnowledge());
-//            if(n==null)
-//                n=0;
-//            kid2L.put( paragraph.getParagraphKnowledge(),n+1 );
-//        }
-//        Map<Integer,Integer> kid2i=new HashMap<>( kids.size()*3/2 );//每个知识点段落数
-//        int oldi=0;
-//        for(Integer kid:kids){
-//            kid2i.put( kid,oldi );
-//            oldi+= kid2L.get(kid)==null ? 0:kid2L.get( kid );
-//        }
-//        for(Paragraph paragraph:paragraphs){
-//            Integer i=kid2i.get(paragraph.getParagraphKnowledge());
-//            if(i==null)
-//                continue;
-//            paragraphsA[i]=paragraph;
-//            kid2i.put(paragraph.getParagraphKnowledge(),i+1);
-//        }
         return mongoTemplate.find(query, Paragraph.class);
     }
 

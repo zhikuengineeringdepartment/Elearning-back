@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import java.util.List;
 
-/**
+/*
  *
  * 返回知识见解的侧边栏索引
  *
@@ -50,8 +50,13 @@ import java.util.List;
  * }
  */
 
+
+/**
+ *  fixme mongoDB 中的 index 文档集合应该是没有被使用的
+ */
+
 @Document(collection = "myindex")
-public class Index{
+public class CourseIndex {
     /**
      * 课程id 参考 course的 cid
      */
@@ -92,4 +97,13 @@ public class Index{
         this.catalog = child;
     }
 
+
+    @Override
+    public String toString() {
+        return "Index{" +
+                "cid=" + cid +
+                ", vid='" + vid + '\'' +
+                ", catalog=" + catalog +
+                '}';
+    }
 }

@@ -1,12 +1,16 @@
 package com.zhiku.elearning.entity.mongodb;
 
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Child {
+    /**
+     * 这个 sid 具有多态性，既有可能指"节"的id，也可能指"知识点"的id
+     */
     private Integer sid;
+    /**
+     * 排序的序号（因为展示给前端的时候是有一定顺序的），作用域为同一sub中保持递增
+     */
     private Integer section_seq;
     /**
      * 分段名：如 '2.1 基本概念'
@@ -16,20 +20,12 @@ public class Child {
      * 层级结构
      */
     private Integer level;
-    private List<Document> contents; // todo 这个是什么意思？
 
     /**
      * 递归式的树形结构，如1级标题包含多个2级标题，2级标题包含多个3级标题
      */
     private List<Child> sub;
 
-    public List<Document> getContents() {
-        return contents;
-    }
-
-    public void setContents(List<Document> contents) {
-        this.contents = contents;
-    }
 
     public List<Child> getSub() {
         return sub;
@@ -69,5 +65,16 @@ public class Child {
 
     public void setSid(Integer sid) {
         this.sid = sid;
+    }
+
+    @Override
+    public String toString() {
+        return "Child{" +
+                "sid=" + sid +
+                ", section_seq=" + section_seq +
+                ", section_name='" + section_name + '\'' +
+                ", level=" + level +
+                ", sub=" + sub +
+                '}';
     }
 }

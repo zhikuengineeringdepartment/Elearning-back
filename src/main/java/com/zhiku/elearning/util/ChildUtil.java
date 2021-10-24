@@ -7,19 +7,16 @@ import java.util.*;
 
 public class ChildUtil {
 
-    /*
-    按seq从小到大递归排序，
-    注：要确保都有seq
+
+    /**
+     *  按seq从小到大递归排序，
+     *  注：要确保都有seq
+     *
      */
     public static void childSort(List<Child> children){
         if(children==null)
             return;
-        Collections.sort( children, new Comparator<Child>() {
-            @Override
-            public int compare(Child o1, Child o2) {
-                return o1.getSection_seq()-o2.getSection_seq();
-            }
-        });
+        children.sort(Comparator.comparingInt(Child::getSection_seq));
         for (Child child:children){
             if(child!=null&&child.getSub()!=null){
                 childSort( child.getSub() );

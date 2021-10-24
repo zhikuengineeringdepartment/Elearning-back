@@ -7,10 +7,10 @@ import java.util.List;
 
 /**
  * 课程视图
- * 用来返回对应课程及其对应小节的目录
+ *
  */
 public class CourseView extends Course {
-    private List<SectionView> sections ;
+    private List<SectionView> sections; // 一个课程的若干章
 
     public List<SectionView> getSections() {
         return sections;

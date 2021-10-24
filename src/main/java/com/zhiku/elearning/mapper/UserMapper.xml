@@ -349,7 +349,7 @@
         <include refid="Base_Column_List" />
         from user
         where uid in
-        <foreach collection="list" item="uid" open="(" close=")" index="index" separator=",">
+        <foreach collection="list" item="uid" open="(" close=")" index="courseIndex" separator=",">
             #{uid,jdbcType=INTEGER}
         </foreach>
     </select>

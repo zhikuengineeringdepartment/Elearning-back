@@ -134,7 +134,7 @@
         <include refid="Base_Column_List"/>
         from access_record
         where
-        <foreach collection="list" item="item" index="index" separator=" or ">
+        <foreach collection="list" item="item" index="courseIndex" separator=" or ">
             ip = #{item.ip,jdbcType=VARCHAR} and uri = #{item.uri,jdbcType=VARCHAR}
             and date = #{item.date,jdbcType=DATE}
         </foreach>
@@ -150,7 +150,7 @@
     <insert id="replaceAll" parameterType="java.util.List">
         replace into access_record (aid, ip, uri, date, number, stay_time, latest_time)
         values
-        <foreach collection="list" item="item" index="index" separator=",">
+        <foreach collection="list" item="item" index="courseIndex" separator=",">
             (#{item.aid,jdbcType=INTEGER}, #{item.ip,jdbcType=VARCHAR}, #{item.uri,jdbcType=VARCHAR},
             #{item.date,jdbcType=DATE}, #{item.number,jdbcType=INTEGER}, #{item.stayTime,jdbcType=BIGINT},
             #{item.latestTime,jdbcType=TIMESTAMP})

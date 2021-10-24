@@ -3,7 +3,7 @@ package com.zhiku.elearning.mongo;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.zhiku.elearning.entity.Course;
-import com.zhiku.elearning.entity.mongodb.Index;
+import com.zhiku.elearning.entity.mongodb.CourseIndex;
 import com.zhiku.elearning.entity.mongodb.MongoSystem;
 import org.bson.conversions.Bson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,10 +120,10 @@ public class CourseTemplate {
         query.fields().include("vid"); //包含该字段
 //        query.fields().include("cid"); //包含该字段
 //       query.fields().exclude("catalog");//不包含该字段,注：include和exclude不能同时使用！
-        List<Index> indices = mongoTemplate.find(query, Index.class);
+        List<CourseIndex> indices = mongoTemplate.find(query, CourseIndex.class);
         if (indices != null) {
-            for (Index index : indices) {
-                vids.add(index.getVid());
+            for (CourseIndex courseIndex : indices) {
+                vids.add(courseIndex.getVid());
             }
         }
         return new ArrayList<>(vids);

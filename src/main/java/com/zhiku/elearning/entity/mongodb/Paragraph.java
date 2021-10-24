@@ -10,14 +10,18 @@ public class Paragraph {
     @Id
     @Field("_id")
     private ObjectId pid;
-    @Field("paragraph_seq")
-    private Integer paragraphSeq;
 
     /**
-     * 所属知识点, 参考 knowledge 的 kid
+     * 该段落所属知识点的 id
      */
     @Field("paragraph_knowledge")
     private Integer paragraphKnowledge;
+
+    /**
+     * 同一知识点下排序的依据
+     */
+    @Field("paragraph_seq")
+    private Integer paragraphSeq;
 
     /**
      * 段落类型,标志段落的类型：

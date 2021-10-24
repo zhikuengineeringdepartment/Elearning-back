@@ -125,7 +125,7 @@
         paragraph_type, paragraph_newline, paragraph_content
         )
         values
-        <foreach collection="list" item="item" index="index" separator=",">
+        <foreach collection="list" item="item" index="courseIndex" separator=",">
             (#{item.pid,jdbcType=INTEGER}, #{item.paragraphSeq,jdbcType=INTEGER}, #{item.paragraphKnowledge,jdbcType=INTEGER},
             #{item.paragraphType,jdbcType=CHAR}, #{item.paragraphNewline,jdbcType=CHAR}, #{item.paragraphContent,jdbcType=LONGVARCHAR}
             )

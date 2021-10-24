@@ -2,7 +2,7 @@ package com.zhiku.elearning.mongo;
 
 import com.zhiku.elearning.entity.Course;
 import com.zhiku.elearning.entity.mongodb.Child;
-import com.zhiku.elearning.entity.mongodb.Index;
+import com.zhiku.elearning.entity.mongodb.CourseIndex;
 import com.zhiku.elearning.entity.mongodb.MongoSystem;
 import com.zhiku.elearning.entity.mongodb.Paragraph;
 import com.zhiku.elearning.util.ChildUtil;
@@ -38,8 +38,8 @@ public class IndexTemplate {
         Course course = courses.get(0);
         //查询出对应课程号的一级索引
         Criteria index = Criteria.where("cid").is(cid);
-        List<Index> indexlist = mongoTemplate.find(query(index), Index.class);
-        Index i = indexlist.get(0);//修改表结构之后，indexlist里应该只有一条index记录
+        List<CourseIndex> indexlist = mongoTemplate.find(query(index), CourseIndex.class);
+        CourseIndex i = indexlist.get(0);//修改表结构之后，indexlist里应该只有一条index记录
         List<SectionView> sections = new ArrayList<SectionView>();
         List<Child> children = i.getCatalog();
         int ind = 0;
@@ -107,11 +107,11 @@ public class IndexTemplate {
         //查询出对应课程号的一级索引
 
         Criteria index = Criteria.where("cid").is(cid).and("vid").is(vid);
-        List<Index> indexList = mongoTemplate.find(query(index), Index.class);
-        if (indexList.size() == 0) {
+        List<CourseIndex> courseIndexList = mongoTemplate.find(query(index), CourseIndex.class);
+        if (courseIndexList.size() == 0) {
             return null;
         }
-        Index i = indexList.get(0);//修改表结构之后，indexList里应该只有一条index记录
+        CourseIndex i = courseIndexList.get(0);//修改表结构之后，indexList里应该只有一条index记录
         //按seq排序
         ChildUtil.childSort(i.getCatalog());
 
@@ -124,12 +124,12 @@ public class IndexTemplate {
      * @param cid 课程id
      * @param vid 版本号
      */
-    public Index getCatalog(int cid, String vid) {
+    public CourseIndex getCatalog(int cid, String vid) {
         //查询出对应课程号的一级索引
         Query query = new Query();
         query.addCriteria(Criteria.where("cid").is(cid).and("vid").is(vid));
         query.fields().exclude("catalog.sub.sub");//不包含第三层知识点
-        return mongoTemplate.findOne(query, Index.class);
+        return mongoTemplate.findOne(query, CourseIndex.class);
     }
 
     /**
@@ -138,11 +138,13 @@ public class IndexTemplate {
      * @param sid
      * @return
      */
+    // fixme 待删除
+    @Deprecated
     public SectionContentView getSectionContent(int sid) {
         int cid = Integer.parseInt(Integer.toString(sid).substring(0, 3));
         Criteria sectioninfo = Criteria.where("cid").is(cid);
-        List<Index> indexlist = mongoTemplate.find(query(sectioninfo), Index.class);
-        Index i = indexlist.get(0);//修改表结构之后，indexlist里应该只有一条index记录
+        List<CourseIndex> indexlist = mongoTemplate.find(query(sectioninfo), CourseIndex.class);
+        CourseIndex i = indexlist.get(0);//修改表结构之后，indexlist里应该只有一条index记录
         //在这条index记录里查找需要的节
         List<Child> children = i.getCatalog();
         ListIterator<Child> iter = children.listIterator();
@@ -171,9 +173,9 @@ public class IndexTemplate {
                     for (Child c2 : children2) {
                         KnowledgeView knowledgeView = new KnowledgeView();
                         knowledgeView.setKid(c2.getSid());
-                        knowledgeView.setKnowledgeSeq(c2.getSection_seq());
+//                        knowledgeView.setKnowledgeSeq(c2.getSection_seq());
                         knowledgeView.setKnowledgeName(c2.getSection_name());
-                        knowledgeView.setKnowledgeSection(c1.getSid());
+//                        knowledgeView.setKnowledgeSection(c1.getSid());
                         //查找content表，找到本节对应的所有段落
                         Criteria paragraphinfo = Criteria.where("paragraph_knowledge").is(c2.getSid());
                         List<Paragraph> paragraphs = mongoTemplate.find(query(paragraphinfo), Paragraph.class);
@@ -189,6 +191,39 @@ public class IndexTemplate {
         return sectionContentView;
     }
 
+
+    /**
+     * 获取指定节的全部内容
+     *
+     * @param sid 对应level=2的节的id
+     *            注：只查level=2的节只适用于数据库[章->节->知识点]格式严格的情况
+     * @return 返回Index, 其目录下第一层，第一个是目标节
+     * from jsy
+     */
+    public Child getSectionIndexBySid(Integer sid) {
+        //查询节知识点索引结构
+        CourseIndex courseIndex;
+        courseIndex = mongoTemplate.findOne(Query.query(Criteria.where("catalog.sub.sid").is(sid)), CourseIndex.class);
+        if (courseIndex == null)
+            return null;
+
+        //在这条index记录里查找需要的节
+        Child desChild = null;
+        List<Child> chapters = courseIndex.getCatalog();// 章列表
+        out:for (Child chapter : chapters) {
+            List<Child> sections = chapter.getSub();// 节列表
+            for (Child sec : sections) {
+                if (sec.getSid().equals(sid)) { //！都是Integer类型，是对象，不能直接用==比较，否则会比较地址是否相同
+                    desChild = sec;
+                    break out;
+                }
+            }
+        }
+        return desChild;
+    }
+
+
+
     /**
      * 获取指定节的全部内容
      *
@@ -196,63 +231,58 @@ public class IndexTemplate {
      *            注：只查level=2的节只适用于数据库[章->节->知识点]格式严格的情况
      * @return 返回Index, 其目录下第一层，第一个是目标节
      */
-    public Index getSectionIndexBySid(Integer sid, Integer cid, String vid) {
+    @Deprecated
+    public CourseIndex getSectionIndexBySid(Integer sid, Integer cid, String vid) {
         //查询节知识点索引结构
-        Index index;
+        CourseIndex courseIndex;
 
         Query query = new Query();
-        // todo 目前cid,vid 必为null（前端尚未传入）
+        // todo 目前cid,vid 必为null（因为前端尚未传入）
         if (cid == null || vid == null) {
             query.addCriteria(Criteria.where("catalog.sub.sid").is(sid));
 
         } else { //有课程和版本号查询更快
             query.addCriteria(Criteria.where("cid").is(cid).and("vid").is(vid));
         }
-        index = mongoTemplate.findOne(query, Index.class);
 
-        if (index == null)
+        courseIndex = mongoTemplate.findOne(query, CourseIndex.class);
+
+        if (courseIndex == null)
             return null;
 
         //在这条index记录里查找需要的节
-        Child deschild = null;
-        List<Child> chapters = index.getCatalog();//章列表
-        for (Child chapter : chapters) {
-            List<Child> sections = chapter.getSub();//节列表
-//            ListIterator<Child> iter = sections.listIterator();
-//            deschild = iter.next();//？总是从第二个开始
+        Child desChild = null;
+        List<Child> chapters = courseIndex.getCatalog();// 章列表
+
+        out:for (Child chapter : chapters) {
+            List<Child> sections = chapter.getSub();// 节列表
             for (Child sec : sections) {
-                if (sec.getSid().equals(sid)) {//！都是Integr类型，是对象，不能直接用==比较，否则会比较地址是否相同
-                    deschild = sec;
-                    break;
+                if (sec.getSid().equals(sid)) { //！都是Integer类型，是对象，不能直接用==比较，否则会比较地址是否相同
+                    desChild = sec;
+                    break out;
                 }
             }
-            if (deschild != null)
-                break;
-//            if(iter.hasNext()){
-//                while(iter.hasNext() && deschild.getSid() != sid) {
-//                    deschild = iter.next();
-//                }
-//            }
         }
-        //这时候deschild就是目标节
-        if (deschild == null || !deschild.getSid().equals(sid)) {
+
+        // 这时候desChild就是目标节
+        if (desChild == null || !desChild.getSid().equals(sid)) {
             return null;
         }
         chapters.clear();
-        chapters.add(deschild);
-        return index;
+        chapters.add(desChild);
+        return courseIndex;
     }
 
-    public Index findByPrimaryKey(Integer cid, String vid) {
+    public CourseIndex findByPrimaryKey(Integer cid, String vid) {
         Query query = new Query();
         query.addCriteria(Criteria.where("cid").is(cid).and("vid").is(vid));
-        return mongoTemplate.findOne(query, Index.class);
+        return mongoTemplate.findOne(query, CourseIndex.class);
     }
 
     //更新或插入目录索引，新加入的自动赋值sid//新加入的节和知识点id均为负
-    public Map<Integer, Integer> upset(Index index) {
+    public Map<Integer, Integer> upset(CourseIndex courseIndex) {
         int sumSid = 0;
-        for (Child child : index.getCatalog()) {
+        for (Child child : courseIndex.getCatalog()) {
             sumSid += countSid(child);
         }
         //查询最大sid,并自增sumSid
@@ -262,16 +292,16 @@ public class IndexTemplate {
         int xsid = mongoSystem.getMaxSid();
         Map<Integer, Integer> kid2xkid = new HashMap<>();
         //赋值sid
-        for (Child child : index.getCatalog()) {
+        for (Child child : courseIndex.getCatalog()) {
             xsid = handleChild(child, xsid, kid2xkid);
         }
         //插入新节
-        query.addCriteria(Criteria.where("cid").is(index.getCid()).and("vid").is(index.getVid()));
+        query.addCriteria(Criteria.where("cid").is(courseIndex.getCid()).and("vid").is(courseIndex.getVid()));
         Update update1 = new Update();
-        update1.set("cid", index.getCid());
-        update1.set("vid", index.getVid());
-        update1.set("catalog", index.getCatalog());
-        mongoTemplate.upsert(query, update1, Index.class);
+        update1.set("cid", courseIndex.getCid());
+        update1.set("vid", courseIndex.getVid());
+        update1.set("catalog", courseIndex.getCatalog());
+        mongoTemplate.upsert(query, update1, CourseIndex.class);
 
         return kid2xkid;
     }
@@ -279,7 +309,7 @@ public class IndexTemplate {
     public void deleteByPrimaryKey(Integer cid, String vid) {
         Query query = new Query();
         query.addCriteria(Criteria.where("cid").is(cid).and("vid").is(vid));
-        mongoTemplate.remove(query, Index.class);
+        mongoTemplate.remove(query, CourseIndex.class);
     }
 
     //给新加入的章、节、知识点附id
@@ -315,9 +345,9 @@ public class IndexTemplate {
         return sum;
     }
 
-    public static CourseView index2CourseView(Index index, Course course) {
+    public static CourseView index2CourseView(CourseIndex courseIndex, Course course) {
         List<SectionView> sections = new ArrayList<SectionView>();
-        List<Child> children = index.getCatalog();
+        List<Child> children = courseIndex.getCatalog();
         int ind = 0;
         for (Child c : children) {
             List<SubView> sub = new ArrayList<SubView>();

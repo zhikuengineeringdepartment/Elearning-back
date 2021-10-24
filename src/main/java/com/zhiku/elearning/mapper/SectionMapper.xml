@@ -99,7 +99,7 @@
         insert into section (sid, section_name, section_seq,
         section_recommend_path, section_course)
         values
-        <foreach collection="list" item="item" index="index" separator=",">
+        <foreach collection="list" item="item" index="courseIndex" separator=",">
             (#{item.sid,jdbcType=INTEGER}, #{item.sectionName,jdbcType=VARCHAR}, #{item.sectionSeq,jdbcType=VARCHAR},
             #{item.sectionRecommendPath,jdbcType=VARCHAR}, #{item.sectionCourse,jdbcType=INTEGER})
         </foreach>

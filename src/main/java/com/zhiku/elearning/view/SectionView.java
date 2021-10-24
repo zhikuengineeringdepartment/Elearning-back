@@ -4,14 +4,12 @@ package com.zhiku.elearning.view;
 import java.util.List;
 
 /**
- * 节视图
- * 主要用于展示一小节的所有内容
- * 节-知识点-段落
+ * 章视图
  */
 public class SectionView{
     private String title;
     private int index;
-    private List<SubView> sub;
+    private List<SubView> sub; // 一个章的若干节
 
     public String getTitle() {
         return title;

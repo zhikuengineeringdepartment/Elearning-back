@@ -24,29 +24,24 @@ public class SectionController {
 
 
     /**
-     *
      * 获得指定小节的内容
      *
      * @param sid 节号
-     * @param cid 课程号 (未使用)
-     * @param vid 版本号 (未使用)
-     *
      */
     @ResponseBody
     @RequestMapping(value = "getSection", method = RequestMethod.GET)
-    public ResponseData getSection(@RequestParam(value = "sid") int sid,
-                                   @RequestParam(required = false) Integer cid, @RequestParam(required = false) String vid) {
+    public ResponseData getSection(@RequestParam(value = "sid") int sid) {
         ResponseData responseData = ResponseData.ok();
-        SectionContentView sectionContentView = indexService.getSecondLevelIndex(sid, cid, vid);
+        SectionContentView sectionContentView = indexService.getSecondLevelIndex(sid);
         responseData.putDataValue("sectionView", sectionContentView);
         return responseData;
     }
 
 
-
     // FIXME : getCSDN 这个接口前端目前并未使用  -- from jsy
 
     //TODO 存在推荐为空的情况，推荐内容重复，正常使用爬虫和网络使用爬虫差距巨大
+
     /**
      * 获得csdn推荐的爬虫
      *

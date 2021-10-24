@@ -1,6 +1,11 @@
 package com.zhiku.elearning.entity.mysql;
 
 
+/**
+ * fixme 此实体类和mysql中的 knowledge表的功能已被废弃
+ */
+
+@Deprecated
 public class Knowledge {
     /**
      * 自增点 id
@@ -18,8 +23,10 @@ public class Knowledge {
     private String knowledgeName;
 
     /**
+     * FIXME 该字段对应mysql中knowledge的字段
      * 所属小节,对应节id
      */
+    @Deprecated
     private Integer knowledgeSection;
 
     public Integer getKid() {

@@ -22,12 +22,11 @@ public class SpecialColumnArticleController {
     /**
      * 该方法用于前台使用用户获取所有的专栏文章(不包括删除的)
      *
-     * @return
      */
     @ResponseBody
     @RequestMapping(value = "getAll", method = RequestMethod.GET)
     public ResponseData getAllSpecialColumnArticle(Integer start, Integer size) {
-        ResponseData responseData = null;
+        ResponseData responseData;
         SpecialColumnArticle specialColumnArticle = new SpecialColumnArticle();
         specialColumnArticle.setIsDelete(0);
         try {
@@ -47,15 +46,15 @@ public class SpecialColumnArticleController {
     /**
      * 该方法用于前台使用用户获取所有的专栏文章(不包括删除的)
      *
-     * @return
      */
     @ResponseBody
     @RequestMapping(value = "getAllByType", method = RequestMethod.GET)
-    public ResponseData getAllSpecialColumnArticleByType(@RequestParam(value = "specialColumnId", required = true) Integer specialColumnId, Integer start, Integer size) {
-        ResponseData responseData = null;
+    public ResponseData getAllSpecialColumnArticleByType(@RequestParam(value = "specialColumnId") Integer specialColumnId, Integer start, Integer size) {
+        ResponseData responseData;
         SpecialColumnArticle specialColumnArticle = new SpecialColumnArticle();
-        specialColumnArticle.setIsDelete(0);
-        specialColumnArticle.setSpecialColumnId(specialColumnId);
+        specialColumnArticle.setIsDelete(0); // 未删除
+        specialColumnArticle.setSpecialColumnId(specialColumnId); // 文章类型
+
         try {
             List<SpecialColumnArticle> specialColumnArticleList = specialColumnArticleService.list(specialColumnArticle, start, size);
             int total = specialColumnArticleService.getTotal(specialColumnArticle);

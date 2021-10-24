@@ -1,7 +1,6 @@
 package com.zhiku.elearning.service;
 
 import com.zhiku.elearning.entity.mongodb.Child;
-import com.zhiku.elearning.entity.mongodb.Index;
 import com.zhiku.elearning.entity.mysql.Section;
 import com.zhiku.elearning.view.SectionView;
 import com.zhiku.elearning.mapper.SectionMapper;
@@ -9,7 +8,6 @@ import com.zhiku.elearning.mongo.IndexTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class SectionService {
@@ -38,12 +36,7 @@ public class SectionService {
 
 
     public Child getLevel2Section(Integer cid, String vid, Integer sid){
-        Index index = indexTemplate.getSectionIndexBySid(sid, cid, vid);
-        if(index==null){
-            return null;
-        }
-        List<Child> catalog = index.getCatalog();
-        return catalog.get(0);
+        return indexTemplate.getSectionIndexBySid(sid);
     }
 
 }

@@ -88,7 +88,7 @@
         insert into knowledge (kid, knowledge_seq, knowledge_name,
         knowledge_section)
         values
-        <foreach collection="list" item="item" index="index" separator=",">
+        <foreach collection="list" item="item" index="courseIndex" separator=",">
             (#{item.kid,jdbcType=INTEGER}, #{item.knowledgeSeq,jdbcType=INTEGER}, #{item.knowledgeName,jdbcType=VARCHAR},
             #{item.knowledgeSection,jdbcType=INTEGER})
         </foreach>
